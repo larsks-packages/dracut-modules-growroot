@@ -1,7 +1,7 @@
 Summary:	Cloud image initramfs management utilities
 Name:		cloud-initramfs-tools
 Version:	0.20
-Release:	0.2.bzr85%{?dist}
+Release:	0.3.bzr85%{?dist}
 License:	GPLv3
 Group:		System Environment/Base
 URL:		https://launchpad.net/cloud-initramfs-tools
@@ -24,6 +24,10 @@ Requires:	cloud-utils
 Requires:	dracut
 Requires:	util-linux
 
+%if 0%{?rhel}
+# Exclude EPEL architectures that don't have cloud-utils
+ExcludeArch:	i386 ppc64
+%endif
 
 %description -n dracut-modules-growroot
 This dracut module will re-write the partition table of a disk so that the
@@ -51,17 +55,21 @@ make install-epel DESTDIR=$RPM_BUILD_ROOT/%{_prefix}/share/
 
 %files -n dracut-modules-growroot
 %doc COPYING README growroot/doc/example.txt
-%{_prefix}/lib/dracut/modules.d/50growroot/growroot.sh
 %if 0%{?fedora}
+%{_prefix}/lib/dracut/modules.d/50growroot/growroot.sh
 %{_prefix}/lib/dracut/modules.d/50growroot/module-setup.sh
 %else
 %if 0%{?rhel}
+%{_prefix}/share/dracut/modules.d/50growroot/growroot.sh
 %{_prefix}/share/dracut/modules.d/50growroot/install
 %endif
 %endif
 
 
 %changelog
+* Tue May  7 2013 Juerg Haefliger <juergh@gmail.com> - 0.20-0.3.bzr85
+- Fix growroot.sh path for EPEL builds.
+
 * Fri Mar  8 2013 Juerg Haefliger <juergh@gmail.com> - 0.20-0.2.bzr85
 - Spec file fixes per reviewers comments.
 
