@@ -1,7 +1,7 @@
 Summary:	Cloud image initramfs management utilities
 Name:		cloud-initramfs-tools
 Version:	0.20
-Release:	0.3.bzr85%{?dist}
+Release:	0.4.bzr85%{?dist}
 License:	GPLv3
 Group:		System Environment/Base
 URL:		https://launchpad.net/cloud-initramfs-tools
@@ -20,14 +20,10 @@ dracut-modules-growroot: Automatically resize the root partition on first boot
 Summary:	Automatically resize the root partition on first boot
 Group:		System Environment/Base
 
-Requires:	cloud-utils
+Requires:	cloud-utils-growpart
 Requires:	dracut
 Requires:	util-linux
 
-%if 0%{?rhel}
-# Exclude EPEL architectures that don't have cloud-utils
-ExcludeArch:	i386 ppc64
-%endif
 
 %description -n dracut-modules-growroot
 This dracut module will re-write the partition table of a disk so that the
@@ -67,6 +63,10 @@ make install-epel DESTDIR=$RPM_BUILD_ROOT/%{_prefix}/share/
 
 
 %changelog
+* Mon Jun 17 2013 Juerg Haefliger <juergh@gmail.com> - 0.20-0.4.bzr85
+- Require cloud-utils-growpart (instead of cloud-utils) which provides the
+  growpart script now.
+
 * Tue May  7 2013 Juerg Haefliger <juergh@gmail.com> - 0.20-0.3.bzr85
 - Fix growroot.sh path for EPEL builds.
 
