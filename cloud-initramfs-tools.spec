@@ -1,7 +1,7 @@
 Summary:	Cloud image initramfs management utilities
 Name:		cloud-initramfs-tools
 Version:	0.20
-Release:	0.4.bzr85%{?dist}
+Release:	0.5.bzr85%{?dist}
 License:	GPLv3
 Group:		System Environment/Base
 URL:		https://launchpad.net/cloud-initramfs-tools
@@ -63,6 +63,9 @@ make install-epel DESTDIR=$RPM_BUILD_ROOT/%{_prefix}/share/
 
 
 %changelog
+* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.20-0.5.bzr85
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 * Mon Jun 17 2013 Juerg Haefliger <juergh@gmail.com> - 0.20-0.4.bzr85
 - Require cloud-utils-growpart (instead of cloud-utils) which provides the
   growpart script now.
