@@ -1,7 +1,7 @@
 Summary:	Cloud image initramfs management utilities
 Name:		cloud-initramfs-tools
 Version:	0.20
-Release:	0.4.bzr85%{?dist}
+Release:	0.5.bzr85%{?dist}
 License:	GPLv3
 Group:		System Environment/Base
 URL:		https://launchpad.net/cloud-initramfs-tools
@@ -52,10 +52,12 @@ make install-epel DESTDIR=$RPM_BUILD_ROOT/%{_prefix}/share/
 %files -n dracut-modules-growroot
 %doc COPYING README growroot/doc/example.txt
 %if 0%{?fedora}
+%dir %{_prefix}/lib/dracut/modules.d/50growroot
 %{_prefix}/lib/dracut/modules.d/50growroot/growroot.sh
 %{_prefix}/lib/dracut/modules.d/50growroot/module-setup.sh
 %else
 %if 0%{?rhel}
+%dir %{_prefix}/share/dracut/modules.d/50growroot
 %{_prefix}/share/dracut/modules.d/50growroot/growroot.sh
 %{_prefix}/share/dracut/modules.d/50growroot/install
 %endif
@@ -63,6 +65,9 @@ make install-epel DESTDIR=$RPM_BUILD_ROOT/%{_prefix}/share/
 
 
 %changelog
+* Fri Sep 13 2013 Juerg Haefliger <juergh@gmail.com> - 0.20-0.5.bzr85
+- [1003153] Marh the 50growroot directory as owned by the package.
+
 * Mon Jun 17 2013 Juerg Haefliger <juergh@gmail.com> - 0.20-0.4.bzr85
 - Require cloud-utils-growpart (instead of cloud-utils) which provides the
   growpart script now.
