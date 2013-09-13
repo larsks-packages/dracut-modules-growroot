@@ -1,13 +1,12 @@
 Summary:	Cloud image initramfs management utilities
 Name:		cloud-initramfs-tools
 Version:	0.20
-Release:	0.6.bzr85%{?dist}
+Release:	1%{?dist}
 License:	GPLv3
 Group:		System Environment/Base
-URL:		https://launchpad.net/cloud-initramfs-tools
+URL:		https://launchpad.net/ubuntu/saucy/+source/cloud-initramfs-tools/0.20ubuntu1/+files/cloud-initramfs-tools_0.20ubuntu1.tar.gz
 
-# bzr export -r 85 cloud-initramfs-tools-0.20-bzr85.tar.gz lp:cloud-initramfs-tools
-Source0:	%{name}-%{version}-bzr85.tar.gz
+Source0:	%{name}_%{version}ubuntu1.tar.gz
 
 BuildArch:	noarch
 
@@ -32,7 +31,7 @@ disk, or the edge of the next partition.
 
 
 %prep
-%setup -q -n %{name}-%{version}-bzr85
+%setup -q -n %{name}-%{version}ubuntu1
 
 
 %build
@@ -65,8 +64,11 @@ make install-epel DESTDIR=$RPM_BUILD_ROOT/%{_prefix}/share/
 
 
 %changelog
+* Fri Sep 13 2013 Juerg Haefliger <juergh@gmail.com> - 0.20-1
+- Rebase to upstream version 0.20ubuntu1.
+
 * Fri Sep 13 2013 Juerg Haefliger <juergh@gmail.com> - 0.20-0.6.bzr85
-- [1003153] Marh the 50growroot directory as owned by the package.
+- [1003153] Mark the 50growroot directory as owned by the package.
 
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.20-0.5.bzr85
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
