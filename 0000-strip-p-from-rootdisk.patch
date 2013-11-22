@@ -1,0 +1,36 @@
+=== modified file 'growroot/dracut/modules.d/50growroot/growroot.sh'
+--- growroot/dracut/modules.d/50growroot/growroot.sh	2013-05-29 16:27:15 +0000
++++ growroot/dracut/modules.d/50growroot/growroot.sh	2013-11-21 08:15:17 +0000
+@@ -72,6 +72,13 @@
+ 	done
+ 	partnum=${rootdev#${rootdisk}}
+ 
++	# Check if we need to strip a trailing 'p' from the rootdisk name (for
++	# device names like /dev/mmcblk0p)
++	tmp=${rootdisk%[0-9]p}
++	if [ "${#tmp}" != "${#rootdisk}" ] ; then
++		rootdisk=${rootdisk%p}
++	fi
++
+ 	# Do a growpart dry run and exit if it fails or doesn't have anything to do
+ 	if ! out=$(growpart --dry-run "${rootdisk}" "${partnum}") ; then
+ 		_info "${out}"
+
+=== modified file 'growroot/scripts/local-bottom/growroot'
+--- growroot/scripts/local-bottom/growroot	2013-01-28 15:09:25 +0000
++++ growroot/scripts/local-bottom/growroot	2013-11-21 08:15:17 +0000
+@@ -42,6 +42,13 @@
+ done
+ partnum=${rootdev#${rootdisk}}
+ 
++# Check if we need to strip a trailing 'p' from the rootdisk name (for device
++# names like /dev/mmcblk0p)
++tmp=${rootdisk%[0-9]p}
++if [ "${#tmp}" != "${#rootdisk}" ] ; then
++    rootdisk=${rootdisk%p}
++fi
++
+ # if the basename of the root device (ie 'xvda1' or 'sda1') exists
+ # in /sys/block/ then it is a block device, not a partition
+ # (xen xvda1 is an example of such a funny named block device)
+

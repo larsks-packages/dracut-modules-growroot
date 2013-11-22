@@ -1,12 +1,14 @@
 Summary:	Cloud image initramfs management utilities
 Name:		cloud-initramfs-tools
 Version:	0.20
-Release:	1%{?dist}
+Release:	2%{?dist}
 License:	GPLv3
 Group:		System Environment/Base
 URL:		https://launchpad.net/ubuntu/saucy/+source/cloud-initramfs-tools/0.20ubuntu1/+files/cloud-initramfs-tools_0.20ubuntu1.tar.gz
 
 Source0:	%{name}_%{version}ubuntu1.tar.gz
+Patch0:		0000-strip-p-from-rootdisk.patch
+Patch1:		0001-run-in-pre-mount-stage.patch
 
 BuildArch:	noarch
 
@@ -21,6 +23,7 @@ Group:		System Environment/Base
 
 Requires:	cloud-utils-growpart
 Requires:	dracut
+Requires:	grep
 Requires:	util-linux
 
 
@@ -32,6 +35,8 @@ disk, or the edge of the next partition.
 
 %prep
 %setup -q -n %{name}-%{version}ubuntu1
+%patch0
+%patch1
 
 
 %build
@@ -52,11 +57,13 @@ make install-epel DESTDIR=$RPM_BUILD_ROOT/%{_prefix}/share/
 %doc COPYING README growroot/doc/example.txt
 %if 0%{?fedora}
 %dir %{_prefix}/lib/dracut/modules.d/50growroot
+%{_prefix}/lib/dracut/modules.d/50growroot/growroot-dummy.sh
 %{_prefix}/lib/dracut/modules.d/50growroot/growroot.sh
 %{_prefix}/lib/dracut/modules.d/50growroot/module-setup.sh
 %else
 %if 0%{?rhel}
 %dir %{_prefix}/share/dracut/modules.d/50growroot
+%{_prefix}/share/dracut/modules.d/50growroot/growroot-dummy.sh
 %{_prefix}/share/dracut/modules.d/50growroot/growroot.sh
 %{_prefix}/share/dracut/modules.d/50growroot/install
 %endif
@@ -64,6 +71,10 @@ make install-epel DESTDIR=$RPM_BUILD_ROOT/%{_prefix}/share/
 
 
 %changelog
+* Mon Nov 18 2013 Juerg Haefliger <juergh@gmail.com> - 0.20-2
+- [1009172] dracut-modules-growroot does not enlarge /dev/mmcblk0
+- [1016648] ARM guest on x86_64 fails to boot, /dev/vda3 does not exist
+
 * Fri Sep 13 2013 Juerg Haefliger <juergh@gmail.com> - 0.20-1
 - Rebase to upstream version 0.20ubuntu1.
 
